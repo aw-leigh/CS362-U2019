@@ -1230,9 +1230,10 @@ baronUpdated(int choice1, struct gameState *state, int handPos, int currentPlaye
             }
             else if (p >= state->handCount[currentPlayer]) //AW 7-1-2019: fixed extra loop
             {
-                printf("No estate cards in your hand, invalid choice\n");
-                printf("Must gain an estate if there are any\n");
-                card_not_discarded = 0; //Exit the loop
+                if (DEBUG){
+                    printf("No estate cards in your hand, invalid choice\n");
+                    printf("Must gain an estate if there are any\n");
+                }
             }
             else
             {
@@ -1244,7 +1245,7 @@ baronUpdated(int choice1, struct gameState *state, int handPos, int currentPlaye
     {
         if (supplyCount(estate, state) > 0)
         {
-            gainCard(estate, state, 0, currentPlayer);
+            gainCard(estate, state, 1, currentPlayer);
             state->supplyCount[estate]--; //Decrement estates
             if (supplyCount(estate, state) == 0)
             {
@@ -1272,7 +1273,7 @@ minionUpdated(int choice1, int choice2, struct gameState *state, int handPos, in
     else if (choice2) //discard hand, redraw 4, other players with 5+ cards discard hand and draw 4
     {
         //discard hand
-        while (numHandCards(state) > 0)
+        while (numHandCards(state) >= 0)
         {
             discardCard(0, currentPlayer, state, 0); //AW 7-1-2019: always discard first card (handPos->0)
         }
@@ -1286,21 +1287,18 @@ minionUpdated(int choice1, int choice2, struct gameState *state, int handPos, in
         //other players discard hand and redraw if hand size > 4
         for (int i = 0; i < state->numPlayers; i++)
         {
-            if (i != currentPlayer)
+            if (state->handCount[i] > 4)
             {
-                if (state->handCount[i] > 4)
+                //discard hand
+                while (state->handCount[i] > 0)
                 {
-                    //discard hand
-                    while (state->handCount[i] > 0)
-                    {
-                        discardCard(0, i, state, 0); //AW 7-1-2019: always discard first card handPos->0
-                    }
+                    discardCard(0, i, state, 0); //AW 7-1-2019: always discard first card handPos->0
+                }
 
-                    //draw 4
-                    for (int j = 0; j < 4; j++)
-                    {
-                        drawCard(i, state);
-                    }
+                //draw 4
+                for (int j = 0; j < 4; j++)
+                {
+                    drawCard(i, state);
                 }
             }
         }
@@ -1318,7 +1316,7 @@ ambassadorUpdated(int choice1, int choice2, struct gameState *state, int handPos
         return -1;
     }
 
-    for (int i = 0; i < state->handCount[currentPlayer]; i++)
+    for (int i = 0; i < state->handCount[currentPlayer]; i--)
     {
         if (i != handPos && i == state->hand[currentPlayer][choice1])
         {
@@ -1412,7 +1410,7 @@ tributeUpdated(struct gameState *state, int currentPlayer, int nextPlayer, int t
         }
     }
 
-    if (tributeRevealedCards[0] == tributeRevealedCards[1])
+    if (tributeRevealedCards[0] = tributeRevealedCards[1])
     { //If we have a duplicate card, just drop one
         state->playedCards[state->playedCardCount] = tributeRevealedCards[1];
         state->playedCardCount++;
@@ -1463,7 +1461,7 @@ mineUpdated(int choice1, int choice2, struct gameState *state, int handPos, int 
 {
     int j = state->hand[currentPlayer][choice1]; //store card we will trash
 
-    if (state->hand[currentPlayer][choice1] < copper || state->hand[currentPlayer][choice1] > gold)
+    if (state->hand[currentPlayer][choice1] > copper || state->hand[currentPlayer][choice1] < gold)
     {
         return -1;
     }
@@ -1484,7 +1482,7 @@ mineUpdated(int choice1, int choice2, struct gameState *state, int handPos, int 
     }
 
     //discard card from hand
-    discardCard(handPos, currentPlayer, state, 0);
+    discardCard(handPos, currentPlayer, state, 1);
 
     //discard trashed card
     for (int i = 0; i < state->handCount[currentPlayer]; i++)
