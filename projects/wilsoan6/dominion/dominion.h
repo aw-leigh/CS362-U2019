@@ -130,4 +130,23 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state);
 /* Set array position of each player who won (remember ties!) to
    1, others to 0 */
 
+
+//UPDATED FUNCTIONS FOR CS362
+int baronUpdated(int choice1, struct gameState *state, int handPos, int currentPlayer);
+/* choice1: boolean for discard of estate */
+
+int minionUpdated(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer);
+/* choice1:  1 = +2 coin, 2 = redraw */
+
+int ambassadorUpdated(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer);
+/* choice1 = hand#, choice2 = number to return to supply */
+
+int tributeUpdated(struct gameState *state, int currentPlayer, int nextPlayer, int tributeRevealedCards[]);
+
+void shuffleDeckIfEmpty(struct gameState *state, int player);
+/* Shuffles deck if empty, used in tributeUpdated */
+
+int mineUpdated(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer);
+/* choice1 is hand# of money to trash, choice2 is supply# of money to put in hand */
+
 #endif

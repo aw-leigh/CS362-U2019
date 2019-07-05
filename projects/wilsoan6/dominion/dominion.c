@@ -1202,7 +1202,7 @@ int updateCoins(int player, struct gameState *state, int bonus)
     return 0;
 }
 
-baronUpdated(int choice1, struct gameState *state, int handPos, int currentPlayer)
+int baronUpdated(int choice1, struct gameState *state, int handPos, int currentPlayer)
 {
     int add_estate = 1;                            //flag for adding estate to player's hand
     discardCard(handPos, currentPlayer, state, 0); //discard Baron
@@ -1257,7 +1257,7 @@ baronUpdated(int choice1, struct gameState *state, int handPos, int currentPlaye
     return 0;
 }
 
-minionUpdated(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer)
+int minionUpdated(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer)
 {
     //+1 action
     state->numActions++;
@@ -1306,7 +1306,7 @@ minionUpdated(int choice1, int choice2, struct gameState *state, int handPos, in
     return 0;
 }
 
-ambassadorUpdated(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer)
+int ambassadorUpdated(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer)
 {
     int j = 0; //used to check if player has enough cards to discard
 
@@ -1362,7 +1362,7 @@ ambassadorUpdated(int choice1, int choice2, struct gameState *state, int handPos
     return 0;
 }
 
-tributeUpdated(struct gameState *state, int currentPlayer, int nextPlayer, int tributeRevealedCards[])
+int tributeUpdated(struct gameState *state, int currentPlayer, int nextPlayer, int tributeRevealedCards[])
 {
     if ((state->discardCount[nextPlayer] + state->deckCount[nextPlayer]) <= 1)
     {
@@ -1441,7 +1441,7 @@ tributeUpdated(struct gameState *state, int currentPlayer, int nextPlayer, int t
     return 0;
 }
 
-shuffleDeckIfEmpty(struct gameState *state, int player)
+void shuffleDeckIfEmpty(struct gameState *state, int player)
 {
     if (state->deckCount[player] == 0)
     {
@@ -1457,7 +1457,7 @@ shuffleDeckIfEmpty(struct gameState *state, int player)
     }
 }
 
-mineUpdated(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer)
+int mineUpdated(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer)
 {
     int j = state->hand[currentPlayer][choice1]; //store card we will trash
 
