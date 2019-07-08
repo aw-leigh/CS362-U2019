@@ -1234,6 +1234,7 @@ int baronUpdated(int choice1, struct gameState *state, int handPos, int currentP
                     printf("No estate cards in your hand, invalid choice\n");
                     printf("Must gain an estate if there are any\n");
                 }
+                card_not_discarded = 0; //Exit the loop
             }
             else
             {
@@ -1245,8 +1246,7 @@ int baronUpdated(int choice1, struct gameState *state, int handPos, int currentP
     {
         if (supplyCount(estate, state) > 0)
         {
-            gainCard(estate, state, 1, currentPlayer);
-            state->supplyCount[estate]--; //Decrement estates
+            gainCard(estate, state, 0, currentPlayer);
             if (supplyCount(estate, state) == 0)
             {
                 isGameOver(state);
