@@ -1096,21 +1096,16 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
     return -1;
 }
-//trashFlag <=0 = played, 1 = discard, 2+ = trash
+
 int discardCard(int handPos, int currentPlayer, struct gameState *state, int trashFlag)
 {
 
     //if card is not trashed, added to Played pile
-    if (trashFlag <= 0)
+    if (trashFlag < 1)
     {
         //add card to played pile
         state->playedCards[state->playedCardCount] = state->hand[currentPlayer][handPos];
         state->playedCardCount++;
-    }
-    else if(trashFlag == 1){
-        //add card to discard pile
-        state->discard[currentPlayer][state->discardCount[currentPlayer]] = state->hand[currentPlayer][handPos];
-        state->discardCount[currentPlayer]++;        
     }
 
     //set played card to -1
@@ -1270,17 +1265,17 @@ int minionUpdated(int choice1, int choice2, struct gameState *state, int handPos
     //discard card from hand
     discardCard(handPos, currentPlayer, state, 0);
 
-    if (choice1 == 1) //+2 coins
+    if (choice1) //+2 coins
     {
         state->coins = state->coins + 2;
     }
 
-    else if (choice1 == 2) //discard hand, redraw 4, other players with 5+ cards discard hand and draw 4
+    else if (choice2) //discard hand, redraw 4, other players with 5+ cards discard hand and draw 4
     {
         //discard hand
         while (numHandCards(state) > 0)
         {
-            discardCard(0, currentPlayer, state, 1); //AW 7-1-2019: always discard first card (handPos->0)
+            discardCard(0, currentPlayer, state, 0); //AW 7-1-2019: always discard first card (handPos->0)
         }
 
         //draw 4
@@ -1299,7 +1294,7 @@ int minionUpdated(int choice1, int choice2, struct gameState *state, int handPos
                     //discard hand
                     while (state->handCount[i] > 0)
                     {
-                        discardCard(0, i, state, 1); //AW 7-1-2019: always discard first card handPos->0
+                        discardCard(0, i, state, 0); //AW 7-1-2019: always discard first card handPos->0
                     }
 
                     //draw 4
