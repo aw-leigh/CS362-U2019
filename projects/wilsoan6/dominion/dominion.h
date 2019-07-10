@@ -141,7 +141,7 @@ int minionUpdated(int choice1, int choice2, struct gameState *state, int handPos
 int ambassadorUpdated(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer);
 /* choice1 = hand#, choice2 = number to return to supply */
 
-int tributeUpdated(struct gameState *state, int currentPlayer, int nextPlayer, int tributeRevealedCards[]);
+int tributeUpdated(struct gameState *state, int handPos, int currentPlayer, int nextPlayer, int tributeRevealedCards[]);
 
 void shuffleDeckIfEmpty(struct gameState *state, int player);
 /* Shuffles deck if empty, used in tributeUpdated */
