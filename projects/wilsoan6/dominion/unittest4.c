@@ -62,8 +62,8 @@ int main() {
 
     //P2 deck:  adventurer, estate, estate, copper, copper, copper, 
     //          copper, estate, copper, copper, 
-    afterSetupG.deck[nextPlayer][afterSetupG.deckCount[nextPlayer]-1] = -1;
-    afterSetupG.deck[nextPlayer][afterSetupG.deckCount[nextPlayer]-2] = -1;
+    afterSetupG.deck[nextPlayer][afterSetupG.deckCount[nextPlayer]-1] = copper;
+    afterSetupG.deck[nextPlayer][afterSetupG.deckCount[nextPlayer]-2] = adventurer;
 
     // printf("  P2 deck count : %d\n",afterSetupG.deckCount[nextPlayer]);
     // for(int i = afterSetupG.deckCount[nextPlayer] - 1; i >= 0 ; i--){
@@ -133,17 +133,14 @@ int main() {
     printf("  Revealed cards: Action = %d, Victory = %d, Treasure = %d\n", numAction, numVictory, numTreasure);
 
     printf("  Actions before = %d, after = %d, expected = %d\n", afterSetupG.numActions, testG.numActions, afterSetupG.numActions + (numAction * 2));
-    //assert(testG.numActions == afterSetupG.numActions + (numAction * 2));
+    assert(testG.numActions == afterSetupG.numActions + (numAction * 2));
   
     printf("  Cards   before = %d, after = %d, expected = %d\n", afterSetupG.handCount[currentPlayer], testG.handCount[currentPlayer], afterSetupG.handCount[currentPlayer] + (numVictory * 2) - 1);
-    //assert(testG.handCount[currentPlayer] == afterSetupG.handCount[currentPlayer] + (numVictory * 2));
+    assert(testG.handCount[currentPlayer] == afterSetupG.handCount[currentPlayer] + (numVictory * 2) - 1);
     
     printf("  Coins   before = %d, after = %d, expected = %d\n", afterSetupG.coins, testG.coins, afterSetupG.coins + (numTreasure * 2));
-    //assert(testG.coins == afterSetupG.coins + (numTreasure * 2));
+    assert(testG.coins == afterSetupG.coins + (numTreasure * 2));
   
-
-
-
 	printf("\n >>>>> SUCCESS: Testing complete %s <<<<<\n\n", TESTCARD);
 
     return 0;
