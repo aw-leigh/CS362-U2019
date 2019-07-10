@@ -1324,9 +1324,9 @@ int ambassadorUpdated(int choice1, int choice2, struct gameState *state, int han
         return -1;
     }
 
-    for (int i = 0; i < state->handCount[currentPlayer]; i--)
+    for (int i = 0; i < state->handCount[currentPlayer]; i++)
     {
-        if (i != handPos && i == state->hand[currentPlayer][choice1])
+        if (state->hand[currentPlayer][i] == state->hand[currentPlayer][choice1])
         {
             j++;
         }
@@ -1361,7 +1361,7 @@ int ambassadorUpdated(int choice1, int choice2, struct gameState *state, int han
         {
             if (state->hand[currentPlayer][i] == state->hand[currentPlayer][choice1])
             {
-                discardCard(i, currentPlayer, state, 1);
+                discardCard(i, currentPlayer, state, 2);
                 break;
             }
         }
@@ -1418,7 +1418,7 @@ int tributeUpdated(struct gameState *state, int currentPlayer, int nextPlayer, i
         }
     }
 
-    if (tributeRevealedCards[0] = tributeRevealedCards[1])
+    if (tributeRevealedCards[0] == tributeRevealedCards[1])
     { //If we have a duplicate card, just drop one
         state->playedCards[state->playedCardCount] = tributeRevealedCards[1];
         state->playedCardCount++;
