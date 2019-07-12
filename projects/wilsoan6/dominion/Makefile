@@ -30,54 +30,62 @@ runtests: testDrawCard
 	cat dominion.c.gcov >> unittestresult.out
 
 unittest1: unittest1.c dominion.o rngs.o
-	gcc -o unittest1 -g  unittest1.c dominion.o rngs.o $(CFLAGS)
+	@gcc -o unittest1 -g  unittest1.c dominion.o rngs.o $(CFLAGS)
 
 unittest2: unittest2.c dominion.o rngs.o
-	gcc -o unittest2 -g  unittest2.c dominion.o rngs.o $(CFLAGS)
+	@gcc -o unittest2 -g  unittest2.c dominion.o rngs.o $(CFLAGS)
 
 unittest3: unittest3.c dominion.o rngs.o
-	gcc -o unittest3 -g  unittest3.c dominion.o rngs.o $(CFLAGS)
+	@gcc -o unittest3 -g  unittest3.c dominion.o rngs.o $(CFLAGS)
 
 unittest4: unittest4.c dominion.o rngs.o
-	gcc -o unittest4 -g  unittest4.c dominion.o rngs.o $(CFLAGS)
+	@gcc -o unittest4 -g  unittest4.c dominion.o rngs.o $(CFLAGS)
 
 unittest5: unittest5.c dominion.o rngs.o
-	gcc -o unittest5 -g  unittest5.c dominion.o rngs.o $(CFLAGS)
+	@gcc -o unittest5 -g  unittest5.c dominion.o rngs.o $(CFLAGS)
 
 unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c
 	
-	echo "Result for running BST tests:" > unittestresults.out
+	@echo Running Dominion tests...
+	
+	@echo "Result for running Dominion tests:" > unittestresults.out
 
-	echo "unittest1.c:" >> unittestresults.out
-	make unittest1
-	./unittest1 >> unittestresults.out
+	@echo "unittest1.c:" >> unittestresults.out
+	@$(MAKE) --no-print-directory unittest1
+	@./unittest1 >> unittestresults.out
 	
-	echo "unittest2.c:" >> unittestresults.out
-	make unittest2
-	./unittest2 >> unittestresults.out
-	
-	echo "unittest3.c:" >> unittestresults.out
-	make unittest3
-	./unittest3 >> unittestresults.out
-	
-	echo "unittest4.c:" >> unittestresults.out
-	make unittest4
-	./unittest4 >> unittestresults.out
-	
-	echo "unittest5.c:" >> unittestresults.out
-	make unittest5
-	./unittest5 >> unittestresults.out
-	
-	echo "----------------- Code Coverage ----------------" >> unittestresults.out
-	echo >> unittestresults.out
+	@echo "unittest2.c:" >> unittestresults.out
+	@$(MAKE) --no-print-directory unittest2
+	@./unittest2 >> unittestresults.out
 
-	echo "------------ Summary -----------" >> unittestresults.out
-	echo >> unittestresults.out
-	gcov dominion.c -b >> unittestresults.out
+	@echo Still working...
 
-	echo "-------- Function Details -------" >> unittestresults.out
-	echo >> unittestresults.out	
-	gcov dominion.c -b -f >> unittestresults.out
+	@echo "unittest3.c:" >> unittestresults.out
+	@$(MAKE) --no-print-directory unittest3
+	@./unittest3 >> unittestresults.out
+
+	@echo "unittest4.c:" >> unittestresults.out
+	@$(MAKE) --no-print-directory unittest4
+	@./unittest4 >> unittestresults.out
+
+	@echo Almost done...
+
+	@echo "unittest5.c:" >> unittestresults.out
+	@$(MAKE) --no-print-directory unittest5
+	@./unittest5 >> unittestresults.out
+	
+	@echo "----------------- Code Coverage ----------------" >> unittestresults.out
+	@echo >> unittestresults.out
+
+	@echo "------------ Summary -----------" >> unittestresults.out
+	@echo >> unittestresults.out
+	@gcov dominion.c -b >> unittestresults.out
+
+	@echo "-------- Function Details -------" >> unittestresults.out
+	@echo >> unittestresults.out	
+	@gcov dominion.c -b -f >> unittestresults.out
+
+	@echo Done!
 
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
