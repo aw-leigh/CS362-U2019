@@ -93,4 +93,4 @@ player: player.c interface.o
 all: playdom player 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out *.exe testDrawCard badTestDrawCard
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out *.exe testDrawCard badTestDrawCard unittest1 unittest2 unittest3 unittest4 unittest5
