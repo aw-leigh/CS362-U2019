@@ -92,7 +92,7 @@ int main() {
     printf("  Top of played pile: %d, expected = %d\n", testG.playedCards[testG.playedCardCount - 1], minion);
     assert(testG.playedCards[testG.playedCardCount - 1] == minion);  
 
-	printf("  Number of cards in hand after = %d, expected = 4\n", testG.handCount[testG.whoseTurn], 4);   
+	printf("  Number of cards in hand after = %d, expected = 4\n", testG.handCount[testG.whoseTurn]);   
     assert(testG.handCount[testG.whoseTurn] == 4);
 
 	// ----------- TEST 4: opponets with < 5 cards do nothing --------------
