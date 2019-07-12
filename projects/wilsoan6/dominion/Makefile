@@ -44,6 +44,41 @@ unittest4: unittest4.c dominion.o rngs.o
 unittest5: unittest5.c dominion.o rngs.o
 	gcc -o unittest5 -g  unittest5.c dominion.o rngs.o $(CFLAGS)
 
+unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c
+	
+	echo "Result for running BST tests:" > unittestresults.out
+
+	echo "unittest1.c:" >> unittestresults.out
+	make unittest1
+	./unittest1 >> unittestresults.out
+	
+	echo "unittest2.c:" >> unittestresults.out
+	make unittest2
+	./unittest2 >> unittestresults.out
+	
+	echo "unittest3.c:" >> unittestresults.out
+	make unittest3
+	./unittest3 >> unittestresults.out
+	
+	echo "unittest4.c:" >> unittestresults.out
+	make unittest4
+	./unittest4 >> unittestresults.out
+	
+	echo "unittest5.c:" >> unittestresults.out
+	make unittest5
+	./unittest5 >> unittestresults.out
+	
+	echo "----------------- Code Coverage ----------------" >> unittestresults.out
+	echo >> unittestresults.out
+
+	echo "------------ Summary -----------" >> unittestresults.out
+	echo >> unittestresults.out
+	gcov dominion.c -b >> unittestresults.out
+
+	echo "-------- Function Details -------" >> unittestresults.out
+	echo >> unittestresults.out	
+	gcov dominion.c -b -f >> unittestresults.out
+
 player: player.c interface.o
 	gcc -o player player.c -g  dominion.o rngs.o interface.o $(CFLAGS)
 

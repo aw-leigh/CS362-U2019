@@ -1826,7 +1826,7 @@ int mineUpdated(int choice1, int choice2, struct gameState *state, int handPos, 
 {
     int j = state->hand[currentPlayer][choice1]; //store card we will trash
 
-    if (state->hand[currentPlayer][choice1] > copper || state->hand[currentPlayer][choice1] < gold)
+    if (state->hand[currentPlayer][choice1] < copper || state->hand[currentPlayer][choice1] > gold)
     {
         return -1;
     }
@@ -1836,25 +1836,25 @@ int mineUpdated(int choice1, int choice2, struct gameState *state, int handPos, 
         return -1;
     }
 
-    if ((getCost(state->hand[currentPlayer][choice1]) + 4) > getCost(choice2))
+    if ((getCost(state->hand[currentPlayer][choice1]) + 3) > getCost(choice2))
     {
         return -1;
     }
 
-    if (!gainCard(choice2, state, 2, currentPlayer)) //make sure there's still supply left
+    if (gainCard(choice2, state, 2, currentPlayer) != 0) //make sure there's still supply left
     {
         return -1;
     }
 
-    //discard card from hand
-    discardCard(handPos, currentPlayer, state, 1);
+    //play mine card from hand
+    discardCard(handPos, currentPlayer, state, 0);
 
     //discard trashed card
     for (int i = 0; i < state->handCount[currentPlayer]; i++)
     {
         if (state->hand[currentPlayer][i] == j)
         {
-            discardCard(i, currentPlayer, state, 1);
+            discardCard(i, currentPlayer, state, 2);
             break;
         }
     }
