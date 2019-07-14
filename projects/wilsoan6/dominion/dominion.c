@@ -514,7 +514,7 @@ int scoreFor(int player, struct gameState *state)
     }
 
     //score from deck
-    for (i = 0; i < state->discardCount[player]; i++)
+    for (i = 0; i < state->deckCount[player]; i++)
     {
         if (state->deck[player][i] == curse)
         {
@@ -597,7 +597,7 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state)
         }
     }
     highScore = players[j];
-
+ 
     //set winners in array to 1 and rest to 0
     for (i = 0; i < MAX_PLAYERS; i++)
     {

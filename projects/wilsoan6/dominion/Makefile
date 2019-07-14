@@ -73,7 +73,7 @@ unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c
 	@$(MAKE) --no-print-directory unittest2
 	@./unittest2 >> unittestresults.out
 
-	@echo Still working...
+	@echo Working...
 
 	@echo "unittest3.c:" >> unittestresults.out
 	@$(MAKE) --no-print-directory unittest3
@@ -83,7 +83,7 @@ unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c
 	@$(MAKE) --no-print-directory unittest4
 	@./unittest4 >> unittestresults.out
 
-	@echo Almost done...
+	@echo Still working...
 
 	@echo "unittest5.c:" >> unittestresults.out
 	@$(MAKE) --no-print-directory unittest5
@@ -93,9 +93,25 @@ unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c
 	@$(MAKE) --no-print-directory cardtest1
 	@./cardtest1 >> unittestresults.out
 	
+	@echo Still working...
+
 	@echo "cardtest2.c:" >> unittestresults.out
 	@$(MAKE) --no-print-directory cardtest2
 	@./cardtest2 >> unittestresults.out	
+
+	@echo "cardtest3.c:" >> unittestresults.out
+	@$(MAKE) --no-print-directory cardtest3
+	@./cardtest3 >> unittestresults.out
+
+	@echo Almost done...
+
+	@echo "cardtest4.c:" >> unittestresults.out
+	@$(MAKE) --no-print-directory cardtest4
+	@./cardtest4 >> unittestresults.out	
+	
+	@echo "cardtest5.c:" >> unittestresults.out
+	@$(MAKE) --no-print-directory cardtest5
+	@./cardtest5 >> unittestresults.out	
 	
 	@echo "----------------- Code Coverage ----------------" >> unittestresults.out
 	@echo >> unittestresults.out
