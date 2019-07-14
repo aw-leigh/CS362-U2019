@@ -104,6 +104,10 @@ int main() {
         }
     }
 
+    for(int i = 0; i < treasure_map; i++){
+        assert(testG.supplyCount[i] == beforeTestG.supplyCount[i]);
+    }
+
 	printf("\n >>>>> SUCCESS: Testing complete %s <<<<<\n\n", TESTFUNC);
 
     return 0;
