@@ -44,6 +44,21 @@ unittest4: unittest4.c dominion.o rngs.o
 unittest5: unittest5.c dominion.o rngs.o
 	@gcc -o unittest5 -g  unittest5.c dominion.o rngs.o $(CFLAGS)
 
+cardtest1: cardtest1.c dominion.o rngs.o
+	@gcc -o cardtest1 -g  cardtest1.c dominion.o rngs.o $(CFLAGS)
+
+cardtest2: cardtest2.c dominion.o rngs.o
+	@gcc -o cardtest2 -g  cardtest2.c dominion.o rngs.o $(CFLAGS)
+
+cardtest3: cardtest3.c dominion.o rngs.o
+	@gcc -o cardtest3 -g  cardtest3.c dominion.o rngs.o $(CFLAGS)
+
+cardtest4: cardtest4.c dominion.o rngs.o
+	@gcc -o cardtest4 -g  cardtest4.c dominion.o rngs.o $(CFLAGS)
+
+cardtest5: cardtest5.c dominion.o rngs.o
+	@gcc -o cardtest5 -g  cardtest5.c dominion.o rngs.o $(CFLAGS)
+
 unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c
 	
 	@echo Running Dominion tests...
@@ -73,6 +88,14 @@ unittestresults: unittest1.c unittest2.c unittest3.c unittest4.c unittest5.c
 	@echo "unittest5.c:" >> unittestresults.out
 	@$(MAKE) --no-print-directory unittest5
 	@./unittest5 >> unittestresults.out
+
+	@echo "cardtest1.c:" >> unittestresults.out
+	@$(MAKE) --no-print-directory cardtest1
+	@./cardtest1 >> unittestresults.out
+	
+	@echo "cardtest2.c:" >> unittestresults.out
+	@$(MAKE) --no-print-directory cardtest2
+	@./cardtest2 >> unittestresults.out	
 	
 	@echo "----------------- Code Coverage ----------------" >> unittestresults.out
 	@echo >> unittestresults.out

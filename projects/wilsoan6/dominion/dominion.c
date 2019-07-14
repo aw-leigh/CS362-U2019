@@ -213,11 +213,14 @@ int shuffle(int player, struct gameState *state)
     int card;
     int i;
 
-    if (state->deckCount[player] < 1)
+    if (state->deckCount[player] < 1) //can't shuffle and empty deck
         return -1;
+
     qsort((void *)(state->deck[player]), state->deckCount[player], sizeof(int), compare);
     /* SORT CARDS IN DECK TO ENSURE DETERMINISM! */
 
+
+    //why not just Fisher-Yates shuffle?
     while (state->deckCount[player] > 0)
     {
         card = floor(Random() * state->deckCount[player]);
