@@ -1217,7 +1217,7 @@ int baronUpdated(int choice1, struct gameState *state, int handPos, int currentP
     {                               //Boolean true for going to discard an estate
         int p = 0;                  //Iterator for hand!
         int card_not_discarded = 1; //Flag for discard set!
-        while (card_not_discarded)
+        while (card_not_discarded == 1)
         {
             if (state->hand[currentPlayer][p] == estate)
             {                      //Found an estate card!
@@ -1247,7 +1247,7 @@ int baronUpdated(int choice1, struct gameState *state, int handPos, int currentP
             }
         }
     }
-    if (add_estate)
+    if (add_estate == 1)
     {
         if (supplyCount(estate, state) > 0)
         {
