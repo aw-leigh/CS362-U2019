@@ -44,7 +44,7 @@ int main()
     {
         for (i = 0; i < sizeof(struct gameState); i++)
         {
-            ((char *)&G)[i] = floor(Random() * 256);
+            ((char *)&G)[i] = (int)floor(Random() * 256);
         }
 
         currentPlayer = (int)floor(Random() * 4); //player 0-3
@@ -52,22 +52,29 @@ int main()
         //ensure the selected player is the one to take the turn
         G.whoseTurn = currentPlayer;
 
-        //G.supplyCount[estate] = (int)floor(Random() * 10) % 2; //either 1 or 0 estates
+        //ensure decks are realistic sizes
         G.deckCount[currentPlayer] = floor(Random() * MAX_DECK);
         G.discardCount[currentPlayer] = floor(Random() * MAX_DECK);
         G.handCount[currentPlayer] = floor(Random() * MAX_HAND);
         G.playedCardCount = floor(Random() * MAX_HAND); //need to add this or segfault
 
+
+        //completely random data ranges between -1.8B to 1.8B ish
+        //need to modify hand values to get a realistic chance of holding an estate / having estates run out
+        
+        G.supplyCount[estate] = (int)floor(Random() * 13); //set estate supply between 0-12
+        
+        for(int i = 0; i < G.handCount[currentPlayer]; i++){ //set card to between 0-255
+            G.hand[currentPlayer][i] = (int)floor(Random() * 256);
+        }
+
         //put baron in player's hand and select it to be played
         handPos = floor(Random() * G.handCount[currentPlayer]);
         G.hand[currentPlayer][handPos] = baron;
 
-        //estates are never in hand? let's hardcode one and see
-        //G.hand[currentPlayer][handPos-1] = estate;
-
         //either try to discard or don't 
-        choice1 = ((int)floor(Random() * 10) % 2); //either 1 or 0
-        //printf("%d ", choice1);
+        choice1 = (int)floor(Random() * 2); //either 1 or 0
+        printf("%d ", choice1);
         
         checkBaron(choice1, &G, handPos, currentPlayer);
     }
