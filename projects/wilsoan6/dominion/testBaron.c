@@ -10,12 +10,45 @@
 #define DEBUG 0
 #define NOISY_TEST 1
 
-int checkBaron(int choice1, struct gameState *post, int handPos, int currentPlayer)
+int checkBaron(int choice1, struct gameState *afterTest, int handPos, int currentPlayer)
 {
     int r;
-    r = baronUpdated(choice1, post, handPos, currentPlayer);
+    int addEstate = 1; 
+    struct gameState beforeTest;
+    memcpy (&beforeTest, afterTest, sizeof(struct gameState));
+
+    r = baronUpdated(choice1, afterTest, handPos, currentPlayer);
+
+    discardCard(handPos, currentPlayer, &beforeTest, 0);
+    beforeTest.numBuys++;
+
+    if (choice1 > 0){
+        for(int i = 0; i < beforeTest.handCount[currentPlayer]; i++){
+            if(beforeTest.hand[currentPlayer][i] == estate){
+                beforeTest.coins += 4; //Add 4 coins to the amount of coins
+                beforeTest.discard[currentPlayer][beforeTest.discardCount[currentPlayer]] = beforeTest.hand[currentPlayer][i];
+                beforeTest.discardCount[currentPlayer]++;
+                for (int p = i; p < beforeTest.handCount[currentPlayer]; p++)
+                {
+                    beforeTest.hand[currentPlayer][p] = beforeTest.hand[currentPlayer][p + 1];
+                }
+                beforeTest.hand[currentPlayer][beforeTest.handCount[currentPlayer]] = -1;
+                beforeTest.handCount[currentPlayer]--;
+                addEstate = 0;
+                break;
+            }
+        }
+    }
+    if(addEstate == 1){
+        if(beforeTest.supplyCount[estate] > 0)
+        {
+            gainCard(estate, &beforeTest, 0, currentPlayer);
+        }
+    }
     
     assert(r == 0);
+    assert(memcmp(&beforeTest, afterTest, sizeof(struct gameState)) == 0);
+
     return 0;
 }
 
@@ -33,18 +66,14 @@ int main()
     printf("RANDOM TESTS.\n");
 
     SelectStream(2);
-    PutSeed(-1);
-
-    // for(int j = 0; j < 1000; j++){
-    //     printf("%d ", (int)floor(Random() * 256));
-    // }
+    PutSeed(27);
 
     //fill gameState with completely random data
     for (n = 0; n < 2000; n++)
     {
         for (i = 0; i < sizeof(struct gameState); i++)
         {
-            ((char *)&G)[i] = (int)floor(Random() * 256);
+            ((char*)&G)[i] = floor(Random() * 256);
         }
 
         currentPlayer = (int)floor(Random() * 4); //player 0-3
@@ -58,14 +87,13 @@ int main()
         G.handCount[currentPlayer] = floor(Random() * MAX_HAND);
         G.playedCardCount = floor(Random() * MAX_HAND); //need to add this or segfault
 
-
-        //completely random data ranges between -1.8B to 1.8B ish
+        //completely random card data ranges between -1.8B to 1.8B ish
         //need to modify hand values to get a realistic chance of holding an estate / having estates run out
         
-        G.supplyCount[estate] = (int)floor(Random() * 13); //set estate supply between 0-12
+        G.supplyCount[estate] = 32767 - (int)floor(Random() * 65536); //set estate supply between -32768 to 32767 (2-byte signed int range)
         
-        for(int i = 0; i < G.handCount[currentPlayer]; i++){ //set card to between 0-255
-            G.hand[currentPlayer][i] = (int)floor(Random() * 256);
+        for(int i = 0; i < G.handCount[currentPlayer]; i++){ //set card to between -32768 to 32767
+            G.hand[currentPlayer][i] = 32767 - (int)floor(Random() * 65536);
         }
 
         //put baron in player's hand and select it to be played
@@ -73,39 +101,20 @@ int main()
         G.hand[currentPlayer][handPos] = baron;
 
         //either try to discard or don't 
-        choice1 = (int)floor(Random() * 2); //either 1 or 0
-        printf("%d ", choice1);
+        choice1 = 32767 - (int)floor(Random() * 65536); //choice1 to between -32768 to 32767
         
         checkBaron(choice1, &G, handPos, currentPlayer);
     }
 
     printf("ALL TESTS OK\n");
 
-    exit(0);
-    
-    /*
-    printf("SIMPLE FIXED TESTS.\n");
-    for (p = 0; p < 2; p++)
-    {
-        for (deckCount = 0; deckCount < 5; deckCount++)
-        {
-            for (discardCount = 0; discardCount < 5; discardCount++)
-            {
-                for (handCount = 0; handCount < 5; handCount++)
-                {
-                    memset(&G, 23, sizeof(struct gameState));
-                    r = initializeGame(2, k, 1, &G);
-                    G.deckCount[p] = deckCount;
-                    memset(G.deck[p], 0, sizeof(int) * deckCount);
-                    G.discardCount[p] = discardCount;
-                    memset(G.discard[p], 0, sizeof(int) * discardCount);
-                    G.handCount[p] = handCount;
-                    memset(G.hand[p], 0, sizeof(int) * handCount);
-                    checkDrawCard(p, &G);
-                }
-            }
-        }
-    }*/
-
+    // for (i = 0; i < sizeof(struct gameState); i++)
+    // {
+    //     printf("%d ",((char *)&G)[i]);
+    // }
+    // for(int i = 0; i < G.handCount[currentPlayer]; i++){ //set card to between 0-255
+    //     printf("%d ",G.hand[currentPlayer][i]);
+    // }    
+   
     return 0;
 }

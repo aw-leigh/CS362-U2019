@@ -34,7 +34,11 @@ runtests: testDrawCard
 
 baronTest: testBaron
 	./testBaron &> unittestresult.out
+	@echo "------------ Summary -----------" >> unittestresult.out
 	gcov dominion.c >> unittestresult.out
+	@echo "-------- Function Details -------" >> unittestresult.out
+	gcov dominion.c -b -f >> unittestresult.out
+	@echo "-------- Line-by-line Breakdown -------" >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out	
 
 player: player.c interface.o
