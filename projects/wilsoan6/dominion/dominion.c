@@ -1235,10 +1235,10 @@ int baronUpdated(int choice1, struct gameState *state, int handPos, int currentP
             }
             else if (p >= state->handCount[currentPlayer]) //AW 7-1-2019: fixed extra loop
             {
-                if (DEBUG){
-                    printf("No estate cards in your hand, invalid choice\n");
-                    printf("Must gain an estate if there are any\n");
-                }
+                // if (DEBUG){
+                //     printf("No estate cards in your hand, invalid choice\n");
+                //     printf("Must gain an estate if there are any\n");
+                // }
                 card_not_discarded = 0; //Exit the loop
             }
             else

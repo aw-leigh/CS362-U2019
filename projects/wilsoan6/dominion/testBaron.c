@@ -91,9 +91,9 @@ int main()
         //need to modify hand values to get a realistic chance of holding an estate / having estates run out
         
         G.supplyCount[estate] = 32767 - (int)floor(Random() * 65536); //set estate supply between -32768 to 32767 (2-byte signed int range)
-	if(i % 500 == 0){
-		G.supplyCount[estate] = 0;
-	}
+        if(i % 500 == 0){
+            G.supplyCount[estate] = 0; //set it to 0 every 500 iterations
+        }
 
 
         for(int i = 0; i < G.handCount[currentPlayer]; i++){ //set card to between -32768 to 32767
