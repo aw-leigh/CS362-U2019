@@ -69,7 +69,7 @@ int main()
     PutSeed(27);
 
     //fill gameState with completely random data
-    for (n = 0; n < 200000; n++)
+    for (n = 0; n < 20000; n++)
     {
         for (i = 0; i < sizeof(struct gameState); i++)
         {
@@ -91,8 +91,9 @@ int main()
         //need to modify hand values to get a realistic chance of holding an estate / having estates run out
         
         G.supplyCount[estate] = 32767 - (int)floor(Random() * 65536); //set estate supply between -32768 to 32767 (2-byte signed int range)
-        if(i % 500 == 0){
-            G.supplyCount[estate] = 0; //set it to 0 every 500 iterations
+        
+        if(n % 500 == 0){
+            G.supplyCount[estate] = 1; //set it to 1 every 500 iterations
         }
 
 

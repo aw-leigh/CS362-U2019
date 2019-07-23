@@ -12,8 +12,14 @@ playdom: dominion.o playdom.c
 testDrawCard: testDrawCard.c dominion.o rngs.o
 	gcc  -o testDrawCard -g  testDrawCard.c dominion.o rngs.o $(CFLAGS)
 
-testBaron: testBaron.c dominion.o rngs.o
-	gcc -o testBaron -g  testBaron.c dominion.o rngs.o $(CFLAGS)
+testBaron: randomtestcard1.c dominion.o rngs.o
+	gcc -o testBaron -g  randomtestcard1.c dominion.o rngs.o $(CFLAGS)
+
+testMinion: randomtestcard2.c dominion.o rngs.o
+	gcc -o testMinion -g  randomtestcard2.c dominion.o rngs.o $(CFLAGS)
+
+testTribute: randomtestcard3.c dominion.o rngs.o
+	gcc -o testTribute -g  randomtestcard3.c dominion.o rngs.o $(CFLAGS)
 
 badTestDrawCard: badTestDrawCard.c dominion.o rngs.o
 	gcc -o badTestDrawCard -g  badTestDrawCard.c dominion.o rngs.o $(CFLAGS)
@@ -32,8 +38,10 @@ runtests: testDrawCard
 	gcov dominion.c >> unittestresult.out
 	cat dominion.c.gcov >> unittestresult.out
 
-baronTest: testBaron
+randomtestresults: testBaron testMinion testTribute
 	./testBaron &> unittestresult.out
+	./testMinion >> unittestresult.out
+	./testTribute >> unittestresult.out
 	@echo "------------ Summary -----------" >> unittestresult.out
 	gcov dominion.c >> unittestresult.out
 	@echo "-------- Function Details -------" >> unittestresult.out
@@ -47,4 +55,4 @@ player: player.c interface.o
 all: playdom player 
 
 clean:
-	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
+	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe testBaron.exe testMinion.exe testTribute.exe

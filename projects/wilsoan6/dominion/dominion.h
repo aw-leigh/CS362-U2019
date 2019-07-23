@@ -135,7 +135,7 @@ int getWinners(int players[MAX_PLAYERS], struct gameState *state);
 int baronUpdated(int choice1, struct gameState *state, int handPos, int currentPlayer);
 /* choice1: boolean for discard of estate */
 
-int minionUpdated(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer);
+int minionUpdated(int choice1, struct gameState *state, int handPos, int currentPlayer);
 /* choice1:  1 = +2 coin, 2 = redraw */
 
 int ambassadorUpdated(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer);

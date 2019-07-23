@@ -943,7 +943,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
         return 0;
 
     case minion:
-        minionUpdated(choice1, choice2, state, handPos, currentPlayer);
+        minionUpdated(choice1, state, handPos, currentPlayer);
         return 0;
 
     case steward:
@@ -1262,7 +1262,7 @@ int baronUpdated(int choice1, struct gameState *state, int handPos, int currentP
     return 0;
 }
 
-int minionUpdated(int choice1, int choice2, struct gameState *state, int handPos, int currentPlayer)
+int minionUpdated(int choice1, struct gameState *state, int handPos, int currentPlayer)
 {
     //+1 action
     state->numActions++;
@@ -1278,7 +1278,7 @@ int minionUpdated(int choice1, int choice2, struct gameState *state, int handPos
     else if (choice1 == 2) //discard hand, redraw 4, other players with 5+ cards discard hand and draw 4
     {
         //discard hand
-        while (numHandCards(state) > 0)
+        while(numHandCards(state) > 0)
         {
             discardCard(0, currentPlayer, state, 1); //AW 7-1-2019: always discard first card (handPos->0)
         }
