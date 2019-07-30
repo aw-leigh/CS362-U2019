@@ -10,27 +10,28 @@ char inputChar()
 
 void inputString(char string[])
 {
-    int length = (rand() % 6) + 3; //string between 3-8 characters long
+    int length = 5; //string between 3-8 characters long
 
     for(int i = 0; i < length; i++){
-      string[i] = inputChar();
+      string[i] = (char)(97 + rand() % (( 122 + 1 ) - 97)); //lowercase letters only
     }
     string[length] = '\0'; //add a null terminator
 }
 
 void testme()
 {
+  FILE *f = fopen("output.txt", "w");
   int tcCount = 0;
-  char string[10];
+  char string[6];
   char c;
   int state = 0;
   while (1)
   {
     tcCount++;
     c = inputChar();
-    memset(string, '0', 10);
+    memset(string, '0', 6);
     inputString(string);
-    printf("Iteration %d: c = %c, s = %s, state = %d\n", tcCount, c, string, state);
+    fprintf(f, "Iteration %d: c = %c, s = %s, state = %d\n", tcCount, c, string, state);
 
     if (c == '[' && state == 0) state = 1;
     if (c == '(' && state == 1) state = 2;
@@ -47,6 +48,7 @@ void testme()
        && state == 9)
     {
       printf("error ");
+      fclose(f);
       exit(200);
     }
   }
