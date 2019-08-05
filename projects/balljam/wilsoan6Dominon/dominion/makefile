@@ -29,3 +29,4 @@ rc2: randomtestcard2.c dominion.o rngs.o
 rc3: randomtestcard3.c dominion.o rngs.o
 	gcc -o randomtestcard3 -g randomtestcard3.c dominion.o rngs.o -coverage -fpic -lm
 	./randomtestcard3
+
